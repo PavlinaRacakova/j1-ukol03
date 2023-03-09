@@ -7,7 +7,7 @@ public class Computer {
     private Ram ram;
     private HardDrive hardDisk;
 
-    public Computer (Processor cpu, Ram ram, HardDrive hardDisk) {
+    public Computer(Processor cpu, Ram ram, HardDrive hardDisk) {
         this.cpu = cpu;
         this.ram = ram;
         this.hardDisk = hardDisk;
@@ -35,6 +35,30 @@ public class Computer {
         if (isTurnedOn) {
             System.out.println("The computer is turned off.");
             isTurnedOn = false;
+        }
+    }
+
+    public void createFile(long size) {
+        if (isTurnedOn) {
+            if (hardDisk.addFile(size)) {
+                System.out.printf("%d GB file added successfully.\n", size);
+            } else {
+                System.err.printf("%d GB file is too large.\n", size);
+            }
+        } else {
+            System.err.println("Computer is turned off.");
+        }
+    }
+
+    public void deleteFile(long size) {
+        if (isTurnedOn) {
+            if (hardDisk.deleteFile(size)) {
+                System.out.printf("%d GB file has been deleted.\n", size);
+            } else {
+                System.err.printf("%d GB cannot be deleted.\n", size);
+            }
+        } else {
+            System.err.println("Computer is turned off.");
         }
     }
 }

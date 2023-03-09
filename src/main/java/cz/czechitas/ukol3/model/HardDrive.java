@@ -5,13 +5,33 @@ public class HardDrive {
     private long capacity;
     private long usedSpace;
 
-    public HardDrive (long capacity) {
+    public HardDrive(long capacity) {
         this.capacity = capacity;
         usedSpace = 0L;
     }
 
     @Override
     public String toString() {
-        return String.format("%l GB hard drive", capacity);
+        return String.format("%d GB hard drive", capacity);
+    }
+
+    public boolean addFile(long fileSize) {
+        if (capacity >= usedSpace + fileSize) {
+            usedSpace += fileSize;
+            return true;
+        }
+        return false;
+    }
+
+    public boolean deleteFile(long fileSize) {
+        if (usedSpace - fileSize > 0) {
+            usedSpace -= fileSize;
+            return true;
+        }
+        return false;
+    }
+
+    public long getUsedSpace() {
+        return usedSpace;
     }
 }
