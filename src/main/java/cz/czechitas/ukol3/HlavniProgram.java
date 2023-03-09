@@ -11,25 +11,35 @@ import cz.czechitas.ukol3.model.Ram;
 public class HlavniProgram {
 
     public static void main(String... args) {
-        HardDrive hardDisk = new HardDrive(512L);
-        Ram ram = new Ram(16L);
-        Processor cpu = new Processor("Intel Core i5", 4_400_000_000L);
-        Computer myComputer = new Computer(cpu, ram, hardDisk);
 
-        System.out.println(myComputer);
-        myComputer.turnOn();
-       /*
-        myComputer.turnOn();
-        myComputer.turnOff();
-        myComputer.turnOff();
-        */
-        myComputer.createFile(12);
-        myComputer.turnOff();
-        myComputer.createFile(1000);
-        myComputer.turnOn();
-        myComputer.createFile(1000);
-        myComputer.deleteFile(10);
-        myComputer.deleteFile(100);
+        HardDrive asusHardDisk = new HardDrive(512L);
+        HardDrive lenovoHardDisk = new HardDrive(520L);
+        HardDrive lenovoSecondDisk = new HardDrive(330L);
+        Ram asusRam = new Ram(16L);
+        Ram lenovoRam = new Ram(8L);
+        Processor asusCpu = new Processor("Intel Core i5", 4_400_000_000L);
+        Processor lenovoCpu = new Processor("Intel Core i7", 4_600_000_000L);
+
+        Computer asus = new Computer(asusCpu, asusRam, asusHardDisk);
+        Computer lenovo = new Computer(lenovoCpu, lenovoRam, lenovoHardDisk, lenovoSecondDisk);
+
+        System.out.println(asus);
+        System.out.println(lenovo);
+        asus.turnOn();
+        asus.addFile(12);
+        asus.turnOff();
+        asus.addFile(1000);
+        asus.turnOn();
+        asus.addFile(1000);
+        asus.deleteFile(10);
+        asus.deleteFile(100);
+        lenovo.turnOn();
+        lenovo.addFile(300);
+        lenovo.addFile(300);
+        lenovo.addFile(1000);
+        lenovo.deleteFile(300);
+        System.out.println("Lenovo hard disk used space: " + lenovoHardDisk.getUsedSpace());
+        System.out.println("Lenovo second disk used space: " + lenovoSecondDisk.getUsedSpace());
+
     }
-
 }

@@ -2,9 +2,9 @@ package cz.czechitas.ukol3.model;
 
 public class Processor {
 
-    private String manufacturer;
-    private long speed;
-    private double speedInGHz;
+    private final String manufacturer;
+    private final long speed;
+    private final double speedInGHz;
 
     public Processor(String manufacturer, long speed) {
         this.manufacturer = manufacturer;

@@ -2,7 +2,7 @@ package cz.czechitas.ukol3.model;
 
 public class Ram {
 
-    private long capacity;
+    private final long capacity;
 
     public Ram(long capacity) {
         this.capacity = capacity;

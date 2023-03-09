@@ -2,7 +2,7 @@ package cz.czechitas.ukol3.model;
 
 public class HardDrive {
 
-    private long capacity;
+    private final long capacity;
     private long usedSpace;
 
     public HardDrive(long capacity) {
@@ -24,7 +24,7 @@ public class HardDrive {
     }
 
     public boolean deleteFile(long fileSize) {
-        if (usedSpace - fileSize > 0) {
+        if (usedSpace - fileSize >= 0) {
             usedSpace -= fileSize;
             return true;
         }
