@@ -31,6 +31,10 @@ public class HardDrive {
         return false;
     }
 
+    public long getCapacity() {
+        return capacity;
+    }
+
     public long getUsedSpace() {
         return usedSpace;
     }

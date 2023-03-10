@@ -3,9 +3,9 @@ package cz.czechitas.ukol3.model;
 public class Computer {
 
     private boolean isTurnedOn;
-    private final Processor cpu;
-    private final Ram ram;
-    private final HardDrive hardDisk;
+    private Processor cpu;
+    private Ram ram;
+    private HardDrive hardDisk;
     private HardDrive secondDisk;
 
     //first constructor
@@ -23,6 +23,22 @@ public class Computer {
         this.secondDisk = secondDisk;
     }
 
+    public void setCpu(Processor cpu) {
+        this.cpu = cpu;
+    }
+
+    public void setRam(Ram ram) {
+        this.ram = ram;
+    }
+
+    public void setHardDisk(HardDrive hardDisk) {
+        this.hardDisk = hardDisk;
+    }
+
+    public void setSecondDisk(HardDrive secondDisk) {
+        this.secondDisk = secondDisk;
+    }
+
     public String toString() {
         if (secondDisk != null) {
             return String.format("Computer parameters:\n%s\n%s\n%s\n%s\n", cpu, ram, hardDisk, secondDisk);
@@ -34,9 +50,18 @@ public class Computer {
         return isTurnedOn;
     }
 
+    private boolean hasAllComponents() {
+        if (secondDisk != null) {
+            return cpu != null && ram != null && hardDisk != null && secondDisk != null;
+        }
+        return cpu != null && ram != null && hardDisk != null;
+    }
+
     public void turnOn() {
         if (isTurnedOn) {
             System.err.println("The computer is already turned on.");
+        } else if (!hasAllComponents()) {
+            System.err.println("The computer does not have all the components.");
         } else {
             isTurnedOn = true;
             System.out.println("The computer is turned on.");

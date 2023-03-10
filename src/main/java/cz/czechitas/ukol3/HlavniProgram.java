@@ -22,6 +22,8 @@ public class HlavniProgram {
 
         Computer asus = new Computer(asusCpu, asusRam, asusHardDisk);
         Computer lenovo = new Computer(lenovoCpu, lenovoRam, lenovoHardDisk, lenovoSecondDisk);
+        Computer incompleteAsus = new Computer(asusCpu, null, null);
+        Computer incompleteLenovo = new Computer (null, null, null, null);
 
         System.out.println(asus);
         System.out.println(lenovo);
@@ -40,6 +42,8 @@ public class HlavniProgram {
         lenovo.deleteFile(300);
         System.out.println("Lenovo hard disk used space: " + lenovoHardDisk.getUsedSpace());
         System.out.println("Lenovo second disk used space: " + lenovoSecondDisk.getUsedSpace());
-
+        incompleteAsus.turnOn();
+        incompleteAsus.addFile(30);
+        incompleteLenovo.turnOn();
     }
 }
