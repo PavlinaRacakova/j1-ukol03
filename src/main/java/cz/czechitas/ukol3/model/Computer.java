@@ -39,6 +39,22 @@ public class Computer {
         this.secondDisk = secondDisk;
     }
 
+    public Processor getCpu() {
+        return cpu;
+    }
+
+    public HardDrive getHardDisk() {
+        return hardDisk;
+    }
+
+    public Ram getRam() {
+        return ram;
+    }
+
+    public HardDrive getSecondDisk() {
+        return secondDisk;
+    }
+
     public String toString() {
         if (secondDisk != null) {
             return String.format("Computer parameters:\n%s\n%s\n%s\n%s\n", cpu, ram, hardDisk, secondDisk);
@@ -52,16 +68,19 @@ public class Computer {
 
     private boolean hasAllComponents() {
         if (secondDisk != null) {
-            return cpu != null && ram != null && hardDisk != null && secondDisk != null;
+            return cpu != null && ram != null && hardDisk != null;
         }
         return cpu != null && ram != null && hardDisk != null;
     }
 
     public void turnOn() {
+        if (!hasAllComponents()) {
+            System.err.println("The computer does not have all the components.");
+            return;
+        }
+
         if (isTurnedOn) {
             System.err.println("The computer is already turned on.");
-        } else if (!hasAllComponents()) {
-            System.err.println("The computer does not have all the components.");
         } else {
             isTurnedOn = true;
             System.out.println("The computer is turned on.");
@@ -76,30 +95,44 @@ public class Computer {
     }
 
     public void addFile(long size) {
-        if (isTurnedOn) {
-            if (secondDisk != null && (hardDisk.addFile(size) || secondDisk.addFile(size))) {
-                System.out.printf("%d GB file added successfully.\n", size);
-            } else if (hardDisk.addFile(size)) {
-                System.out.printf("%d GB file added successfully.\n", size);
-            } else {
-                System.err.printf("%d GB file is too large.\n", size);
-            }
-        } else {
+        if (!isTurnedOn) {
             System.err.println("Computer is turned off.");
+            return;
+        }
+
+        if (secondDisk != null && (hardDisk.isPossibleToAddFile(size) || secondDisk.isPossibleToAddFile(size))) {
+            if (hardDisk.isPossibleToAddFile(size)) {
+                hardDisk.setUsedSpace(hardDisk.getUsedSpace() + size);
+            } else {
+                secondDisk.setUsedSpace(secondDisk.getUsedSpace() + size);
+            }
+            System.out.printf("%d GB file added successfully.\n", size);
+        } else if (hardDisk.isPossibleToAddFile(size)) {
+            hardDisk.setUsedSpace(hardDisk.getUsedSpace() + size);
+            System.out.printf("%d GB file added successfully.\n", size);
+        } else {
+            System.err.printf("%d GB file is too large.\n", size);
         }
     }
 
     public void deleteFile(long size) {
-        if (isTurnedOn) {
-            if (secondDisk != null && (hardDisk.deleteFile(size) || secondDisk.deleteFile(size))) {
-                System.out.printf("%d GB file has been deleted.\n", size);
-            } else if (hardDisk.deleteFile(size)) {
-                System.out.printf("%d GB file has been deleted.\n", size);
-            } else {
-                System.err.printf("%d GB cannot be deleted.\n", size);
-            }
-        } else {
+        if (!isTurnedOn) {
             System.err.println("Computer is turned off.");
+            return;
+        }
+
+        if (secondDisk != null && (hardDisk.isPossibleToDeleteFile(size) || secondDisk.isPossibleToDeleteFile(size))) {
+            if (hardDisk.isPossibleToDeleteFile(size)) {
+                hardDisk.setUsedSpace(hardDisk.getUsedSpace() - size);
+            } else {
+                secondDisk.setUsedSpace(secondDisk.getUsedSpace() - size);
+            }
+            System.out.printf("%d GB file has been deleted.\n", size);
+        } else if (hardDisk.isPossibleToDeleteFile(size)) {
+            hardDisk.setUsedSpace(hardDisk.getUsedSpace() - size);
+            System.out.printf("%d GB file has been deleted.\n", size);
+        } else {
+            System.err.printf("%d GB cannot be deleted.\n", size);
         }
     }
 }
