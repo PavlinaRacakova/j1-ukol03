@@ -2,7 +2,7 @@ package cz.czechitas.ukol3.model;
 
 public class HardDrive {
 
-    private final long capacity;
+    private long capacity;
     private long usedSpace;
 
     public HardDrive(long capacity) {
@@ -15,27 +15,27 @@ public class HardDrive {
         return String.format("%d GB hard drive", capacity);
     }
 
-    public boolean addFile(long fileSize) {
-        if (capacity >= usedSpace + fileSize) {
-            usedSpace += fileSize;
-            return true;
-        }
-        return false;
+    public boolean isPossibleToAddFile(long fileSize) {
+        return capacity >= usedSpace + fileSize;
     }
 
-    public boolean deleteFile(long fileSize) {
-        if (usedSpace - fileSize >= 0) {
-            usedSpace -= fileSize;
-            return true;
-        }
-        return false;
+    public boolean isPossibleToDeleteFile(long fileSize) {
+        return usedSpace - fileSize >= 0;
     }
 
     public long getCapacity() {
         return capacity;
     }
 
+    public void setCapacity(long capacity) {
+        this.capacity = capacity;
+    }
+
     public long getUsedSpace() {
         return usedSpace;
+    }
+
+    public void setUsedSpace(long usedSpace) {
+        this.usedSpace = usedSpace;
     }
 }
