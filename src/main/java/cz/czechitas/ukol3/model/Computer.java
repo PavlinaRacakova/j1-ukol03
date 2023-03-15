@@ -17,9 +17,7 @@ public class Computer {
 
     //second constructor
     public Computer(Processor cpu, Ram ram, HardDrive hardDisk, HardDrive secondDisk) {
-        this.cpu = cpu;
-        this.ram = ram;
-        this.hardDisk = hardDisk;
+        this(cpu, ram, hardDisk);
         this.secondDisk = secondDisk;
     }
 
@@ -67,9 +65,6 @@ public class Computer {
     }
 
     private boolean hasAllComponents() {
-        if (secondDisk != null) {
-            return cpu != null && ram != null && hardDisk != null;
-        }
         return cpu != null && ram != null && hardDisk != null;
     }
 
